@@ -1,62 +1,149 @@
 .card-container {
-    width: 260px;
-    height: 400px;
-    perspective: 1000px;
-    cursor: pointer;
+  width: 320px;
+  height: 480px;
+  perspective: 1000px;
+  cursor: pointer;
 }
 
 .card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    transition: transform 0.8s;
-    transform-style: preserve-3d;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
 }
 
 .card-container.flipped .card-inner {
-    transform: rotateY(180deg);
+  transform: rotateY(180deg);
 }
 
 .card-front,
 .card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    overflow: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 5px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  overflow: hidden;
 }
 
 /* Back of the card (The Pattern) */
 .card-front {
-    background: linear-gradient(135deg, #2a1b3d 0%, #1a0b2e 100%);
-    border: 4px solid var(--color-accent);
+  background: linear-gradient(135deg, #1a0a2e 0%, #0d0518 100%);
+  border: 3px solid var(--color-accent);
 }
 
 /* The Decoration on the back */
 .card-pattern {
-    width: 90%;
-    height: 90%;
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-image:
-        radial-gradient(circle at 50% 50%, rgba(118, 0, 188, 0.2) 0%, transparent 50%);
+  width: 92%;
+  height: 94%;
+  border: 2px solid rgba(255, 215, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: 
+    /* Center diamond */
+    linear-gradient(
+      45deg,
+      transparent 48%,
+      rgba(255, 215, 0, 0.15) 48%,
+      rgba(255, 215, 0, 0.15) 52%,
+      transparent 52%
+    ),
+    linear-gradient(
+      -45deg,
+      transparent 48%,
+      rgba(255, 215, 0, 0.15) 48%,
+      rgba(255, 215, 0, 0.15) 52%,
+      transparent 52%
+    ),
+    /* Repeating pattern */
+    repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 20px,
+        rgba(118, 0, 188, 0.1) 20px,
+        rgba(118, 0, 188, 0.1) 21px
+      ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 20px,
+      rgba(118, 0, 188, 0.1) 20px,
+      rgba(118, 0, 188, 0.1) 21px
+    ),
+    /* Radial glow */
+    radial-gradient(
+        ellipse at center,
+        rgba(118, 0, 188, 0.3) 0%,
+        transparent 60%
+      );
+}
+
+/* Corner decorations */
+.card-pattern::before,
+.card-pattern::after {
+  content: "◈";
+  position: absolute;
+  font-size: 1.5rem;
+  color: var(--color-accent);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.card-pattern::before {
+  top: 10px;
+  left: 10px;
+}
+
+.card-pattern::after {
+  bottom: 10px;
+  right: 10px;
 }
 
 .card-logo {
-    font-family: var(--font-display);
-    font-size: 3rem;
-    color: var(--color-accent);
+  font-family: var(--font-display);
+  font-size: 4rem;
+  color: var(--color-accent);
+  text-shadow:
+    0 0 20px rgba(255, 215, 0, 0.6),
+    0 0 40px rgba(255, 215, 0, 0.3);
+  position: relative;
+  z-index: 1;
+}
+
+/* Inner decorative ring around logo */
+.card-logo::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px;
+  height: 120px;
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.card-logo::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 140px;
+  height: 140px;
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  z-index: -1;
 }
 
 /* Front of the card (The Result - confusing naming convention, but standard in CSS flip) 
@@ -65,72 +152,129 @@
    .card-back should be the content.
 */
 .card-back {
-    background: linear-gradient(135deg, #fff5e6 0%, #ffe4b5 100%);
-    color: #3d2b1f;
-    transform: rotateY(180deg);
-    border: 4px solid var(--color-accent);
-    justify-content: flex-start;
-    padding-top: 2rem;
-}
-
-.food-title {
-    font-family: var(--font-main);
-    font-weight: 600;
-    font-size: 1.4rem;
-    margin-bottom: 0.5rem;
-    color: #8b4513;
-}
-
-.food-type {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: #cc8800;
-    margin-bottom: 1rem;
-}
-
-.food-luck {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-}
-
-.food-image-container {
-    width: 140px;
-    height: 140px;
-    margin-bottom: 1rem;
-    overflow: hidden;
-    border-radius: 50%;
-    border: 3px solid var(--color-accent);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  background: #1a0b2e;
+  color: #3d2b1f;
+  transform: rotateY(180deg);
+  border: 4px solid var(--color-accent);
+  padding: 0;
+  position: relative;
 }
 
 .food-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
-.food-emoji {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.food-title-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(42, 27, 61, 0.95) 0%,
+    rgba(26, 11, 46, 0.95) 100%
+  );
+  border-top: 3px solid var(--color-accent);
+  padding: 1rem 0.8rem;
+  text-align: center;
+}
+
+.food-title-container::before {
+  content: "✦";
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.2rem;
+  color: var(--color-accent);
+  padding: 0 0.5rem;
+}
+
+.food-title {
+  font-family: var(--font-display), serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin: 0;
+  color: var(--color-accent);
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  letter-spacing: 1px;
+}
+
+/* Responsive Card Sizes */
+@media (max-width: 768px) {
+  .card-container {
+    width: 280px;
+    height: 420px;
+  }
+
+  .card-logo {
+    font-size: 3.5rem;
+  }
+
+  .card-logo::before {
+    width: 100px;
+    height: 100px;
+  }
+
+  .card-logo::after {
+    width: 120px;
+    height: 120px;
+  }
+
+  .food-title {
+    font-size: 1rem;
+  }
+
+  .food-title-container {
+    padding: 0.8rem 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-container {
+    width: 240px;
+    height: 360px;
+  }
+
+  .card-logo {
     font-size: 3rem;
-    background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
-}
-.food-desc {
-    font-size: 0.9rem;
-    line-height: 1.4;
-    margin-bottom: 1rem;
-}
+  }
 
-.glow-btn {
-    margin-top: auto;
-    padding: 0.5rem 1rem;
-    background: var(--color-primary);
-    color: white;
-    border-radius: 20px;
+  .card-logo::before {
+    width: 80px;
+    height: 80px;
+  }
+
+  .card-logo::after {
+    width: 100px;
+    height: 100px;
+  }
+
+  .card-pattern {
+    width: 90%;
+    height: 92%;
+  }
+
+  .card-pattern::before,
+  .card-pattern::after {
+    font-size: 1.2rem;
+  }
+
+  .food-title {
     font-size: 0.9rem;
-    box-shadow: 0 0 10px var(--color-primary);
+  }
+
+  .food-title-container {
+    padding: 0.6rem 0.5rem;
+  }
+
+  .food-title-container::before {
+    font-size: 1rem;
+    top: -12px;
+  }
 }

@@ -16,14 +16,10 @@ const Card = ({ isFlipped, onFlip, content }) => {
                 <div className="card-back">
                     {content ? (
                         <>
-                            <div className="food-type">{content.type}</div>
-                            <div className="food-image-container">
-                                <img src={content.image} alt={content.name} className="food-image" />
+                            <img src={content.image_url} alt={content.title} className="food-image" />
+                            <div className="food-title-container">
+                                <h2 className="food-title">{content.title}</h2>
                             </div>
-                            <h2 className="food-title">{content.name}</h2>
-                            <div className="food-luck">{content.luck}</div>
-                            <p className="food-desc">{content.description}</p>
-                            <div className="glow-btn">ดูรายละเอียด</div>
                         </>
                     ) : (
                         <p>Loading...</p>
